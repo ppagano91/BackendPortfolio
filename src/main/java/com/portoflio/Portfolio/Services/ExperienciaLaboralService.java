@@ -35,6 +35,18 @@ public class ExperienciaLaboralService implements IExperienciaLaboralService {
     @Override
     public ExperienciaLaboral buscarExperienciaLaboral(Long id) {
         return trabajoRepositorio.findById(id).orElse(null);
+    }    
+    
+    public ExperienciaLaboral buscarExperienciaLaboralPorNombre(String nombre){
+        return trabajoRepositorio.findByNombre(nombre).orElse(null);
+    }
+    
+    public boolean existsById(Long id){
+        return trabajoRepositorio.existsById(id);
+    }
+    
+    public boolean existsByNombre(String Nombre){
+        return trabajoRepositorio.existsByNombre(Nombre);
     }
     
 }

@@ -9,6 +9,9 @@ public interface IExperienciaLaboralService {
     public void editarExperienciaLaboral (ExperienciaLaboral trabajo);
     public void borrarExperienciaLaboral (Long id);    
     public ExperienciaLaboral buscarExperienciaLaboral (Long id);
+    public boolean existsById(Long id);
+    public boolean existsByNombre(String Nombre);
+    
     
     
 }
