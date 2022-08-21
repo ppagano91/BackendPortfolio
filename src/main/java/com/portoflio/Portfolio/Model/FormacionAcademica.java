@@ -17,8 +17,8 @@ public class FormacionAcademica {
     private Long id;
     private String titulo;
     private String descripcion;
-    private Date fechaInicio;
-    private Date fechaFin;
+    private String fechaInicio;
+    private String fechaFin;
     private String estado;    
     private String link;
     private String image;
@@ -27,8 +27,8 @@ public class FormacionAcademica {
     }
 
         
-    public FormacionAcademica(Long id, String titulo, String descripcion, Date fechaInicio, Date fechaFin, String estado, String link, String image) {
-        this.id = id;
+    public FormacionAcademica(String titulo, String descripcion, String fechaInicio, String fechaFin, String estado, String link, String image) {
+        //this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;

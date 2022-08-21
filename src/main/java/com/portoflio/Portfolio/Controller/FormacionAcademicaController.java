@@ -1,6 +1,8 @@
 package com.portoflio.Portfolio.Controller;
 
+import com.portoflio.Portfolio.Dto.FormacionAcademicaDto;
 import com.portoflio.Portfolio.Model.FormacionAcademica;
+import com.portoflio.Portfolio.Security.Controller.Mensaje;
 import com.portoflio.Portfolio.Services.IFormacionAcademicaService;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -14,15 +16,37 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+//@RequestMapping("trabajo")
 @CrossOrigin(origins="http://localhost:4200")
 public class FormacionAcademicaController {
     
     @Autowired
-    private IFormacionAcademicaService educacionService;
+    private IFormacionAcademicaService educacionService;    
+    
+    @GetMapping("/educacion/ver/educaciones")
+    @ResponseBody
+    public List<FormacionAcademica> verEeducaciones(){
+        List<FormacionAcademica> formacionesAcademicas=educacionService.verFormacionAcademica();
+        return formacionesAcademicas;
+    }
+    
+    //Con ResponseEntity
+    @GetMapping("/educacion/ver/formacionacademica")
+    public ResponseEntity<List<FormacionAcademica>> getEducation(){
+        List<FormacionAcademica> formacionesAcademicas = educacionService.verFormacionAcademica();
+        return new ResponseEntity(formacionesAcademicas,HttpStatus.OK);
+    }
+    
+    
+    @GetMapping("/educacion/ver/{id}")
+    public FormacionAcademica verEducacion(@PathVariable Long id){
+        return educacionService.buscarFormacionAcademica(id);
+    }
     
     
     @PostMapping("/educacion/new")
@@ -31,12 +55,25 @@ public class FormacionAcademicaController {
         return "Eduación agregada existosamente";
     }
     
-    @GetMapping("/educacion/ver/educaciones")
-    @ResponseBody
-    public List<FormacionAcademica> verEeducaciones(){
-        List<FormacionAcademica> formacionesAcademicas=educacionService.verFormacionAcademica();
-        return formacionesAcademicas;
+    //Con ResponseEntity
+    @PostMapping("/experiencia/create")
+    public ResponseEntity<?> addEducation(@RequestBody FormacionAcademicaDto dtoeducation){
+        if(StringUtils.isBlank(dtoeducation.getTitulo()))
+            return new ResponseEntity(new Mensaje("El título es obligatorio"), HttpStatus.BAD_REQUEST);
+        
+        if(educacionService.existsByTitulo(dtoeducation.getTitulo()))
+            return new ResponseEntity(new Mensaje("Esa educación ya existe"), HttpStatus.BAD_REQUEST);
+        
+        if(dtoeducation.getFechaFin()==null || dtoeducation.getFechaFin()==""){
+            dtoeducation.setFechaFin(null);
+        }
+        
+        FormacionAcademica educacion = new FormacionAcademica(dtoeducation.getTitulo(),dtoeducation.getDescripcion(),dtoeducation.getFechaInicio(),dtoeducation.getFechaFin(),dtoeducation.getEstado(),dtoeducation.getLink(),dtoeducation.getImage());
+        educacionService.crearFormacionAcademica(educacion);
+        return new ResponseEntity(new Mensaje("Educación agregada"), HttpStatus.OK);        
     }
+    
+    
     
     @DeleteMapping("/educacion/delete/{id}")
     public String borrarEducacion(@PathVariable Long id){
@@ -59,7 +96,7 @@ public class FormacionAcademicaController {
         if(!educacionService.existsById(id))
             //return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
             return "El id no existe";
-        if(educacionService.existsByTitulo(educacion.getTitulo()) && educacionService.getByTitulo(educacion.getTitulo()).get().getId() != id){
+        if(educacionService.existsByTitulo(educacion.getTitulo()) && educacionService.buscarExperienciaLaboralPorTitulo(educacion.getTitulo()).getId() != id){
             return "La educación ya existe";
         }
         

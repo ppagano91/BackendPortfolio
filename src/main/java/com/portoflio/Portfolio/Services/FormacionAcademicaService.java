@@ -44,8 +44,12 @@ public class FormacionAcademicaService implements IFormacionAcademicaService {
         return educacionRepositorio.findById(id).orElse(null);
     }    
     
-    public Optional<FormacionAcademica> getByTitulo(String titulo){
+    /*public Optional<FormacionAcademica> getByTitulo(String titulo){
         return educacionRepositorio.findByTitulo(titulo);
+    }*/
+    
+    public FormacionAcademica buscarExperienciaLaboralPorTitulo(String nombre){
+        return educacionRepositorio.findByTitulo(nombre).orElse(null);
     }
     
     public boolean existsById(Long id){

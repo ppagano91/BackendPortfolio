@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-//@RequestMapping("experiencialaboral")
+//@RequestMapping("experiencia")
 @CrossOrigin(origins="http://localhost:4200")
 public class ExperienciaLaboralController {
     
@@ -64,8 +64,8 @@ public class ExperienciaLaboralController {
         if(dtojob.getFechaFin()==null || dtojob.getFechaFin()==""){
             dtojob.setFechaFin(null);
         }
-        ExperienciaLaboral experiencia = new ExperienciaLaboral(dtojob.getNombre(), dtojob.getDescripcion(), dtojob.getFechaInicio(), dtojob.getFechaFin(), dtojob.getEsTrabajoActual(),dtojob.getTipoEmpleo());
-        
+        ExperienciaLaboral experiencia = new ExperienciaLaboral(dtojob.getNombre(), dtojob.getDescripcion(), dtojob.getFechaInicio(), dtojob.getFechaFin(), dtojob.getEsTrabajoActual(),dtojob.getTipoEmpleo(), dtojob.getEmpresa(), dtojob.getTipoJornada());
+        experienciaLaboralService.crearExperienciaLaboral(experiencia);
         return new ResponseEntity(new Mensaje("Experiencia Laboral agregada"), HttpStatus.OK);
                 
         
@@ -76,19 +76,27 @@ public class ExperienciaLaboralController {
         if(!experienciaLaboralService.existsById(id)){
             return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
         }
-        //if(experienciaLaboralService.existsByNombre(dtojob.getNombre()) && experienciaLaboralService.getByNombre(dtojob.getNombre().get().getId()!=id)){
-        //    return new ResponseEntity(new Mensaje("Esta experiencia ya existe"), HttpStatus.BAD_REQUEST);
-        //}
+        if(experienciaLaboralService.existsByNombre(dtojob.getNombre()) && experienciaLaboralService.buscarExperienciaLaboralPorNombre(dtojob.getNombre()).getId()!=id){
+            return new ResponseEntity(new Mensaje("Esta experiencia ya existe"), HttpStatus.BAD_REQUEST);
+        }
         if(StringUtils.isBlank(dtojob.getNombre())){
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         }
         
         ExperienciaLaboral experiencia = experienciaLaboralService.buscarExperienciaLaboral(id);
         experiencia.setNombre(dtojob.getNombre());
-        experiencia.setNombre(dtojob.getNombre());
+        experiencia.setDescripcion(dtojob.getDescripcion());
+        experiencia.setEmpresa(dtojob.getEmpresa());
+        experiencia.setFechaInicio(dtojob.getFechaInicio());
+        experiencia.setFechaFin(dtojob.getFechaFin());
+        experiencia.setEsTrabajoActual(dtojob.getEsTrabajoActual());
+        experiencia.setTipoJornada(dtojob.getTipoJornada());
+        experiencia.setTipoEmpleo(dtojob.getTipoEmpleo());
+        
+        
         
         experienciaLaboralService.editarExperienciaLaboral(experiencia);
-        return new ResponseEntity(new Mensaje("Esperiencia actualizada"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("Experiencia actualizada"), HttpStatus.OK);
     }
     
     
