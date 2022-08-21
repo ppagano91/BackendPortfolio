@@ -10,7 +10,7 @@ public interface IFormacionAcademicaService {
     public void editarFormacionAcademica (FormacionAcademica educacion);
     public void borrarFormacionAcademica (Long id);    
     public FormacionAcademica buscarFormacionAcademica (Long id);
-    public FormacionAcademica buscarExperienciaLaboralPorTitulo(String nombre);
+    public FormacionAcademica buscarFormacionAcademicaPorTitulo(String nombre);
     //public Optional<FormacionAcademica> getByTitulo(String Titulo);
     public boolean existsById(Long id);
     public boolean existsByTitulo(String titulo);

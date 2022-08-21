@@ -71,6 +71,7 @@ public class ExperienciaLaboralController {
         
     }
     
+    //Con ResponseEntity
     @PutMapping("/experiencia/update/{id}")
     public ResponseEntity<?> updateJob(@PathVariable("id") Long id, @RequestBody ExperienciaLaboralDto dtojob){
         if(!experienciaLaboralService.existsById(id)){
@@ -109,6 +110,8 @@ public class ExperienciaLaboralController {
         return "No existe el trabajo con id "+id;
     }
     
+    
+    //Con ResponseEntity
     @DeleteMapping("/experiencia/remove/{id}")
     public ResponseEntity<?> deleteJob(@PathVariable("id") Long id){
         if(!experienciaLaboralService.existsById(id)){

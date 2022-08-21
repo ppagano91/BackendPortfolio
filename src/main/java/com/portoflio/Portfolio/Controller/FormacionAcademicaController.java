@@ -35,13 +35,6 @@ public class FormacionAcademicaController {
         return formacionesAcademicas;
     }
     
-    //Con ResponseEntity
-    @GetMapping("/educacion/ver/formacionacademica")
-    public ResponseEntity<List<FormacionAcademica>> getEducation(){
-        List<FormacionAcademica> formacionesAcademicas = educacionService.verFormacionAcademica();
-        return new ResponseEntity(formacionesAcademicas,HttpStatus.OK);
-    }
-    
     
     @GetMapping("/educacion/ver/{id}")
     public FormacionAcademica verEducacion(@PathVariable Long id){
@@ -55,8 +48,31 @@ public class FormacionAcademicaController {
         return "Eduación agregada existosamente";
     }
     
+    @PutMapping("/educacion/edit")
+    public String editarEducacion(@RequestBody FormacionAcademica educacion){
+        educacionService.editarFormacionAcademica(educacion);
+        return "Educación editada exitosamente";
+    }
+    
+    @DeleteMapping("/educacion/delete/{id}")
+    public String borrarEducacion(@PathVariable Long id){
+        if (educacionService.buscarFormacionAcademica(id)!=null){
+            educacionService.borrarFormacionAcademica(id);
+            return "Eduación eliminada exitosamente";
+        }
+        return "No existe la Formación Academica con id "+id;
+    }
+    
+    
     //Con ResponseEntity
-    @PostMapping("/experiencia/create")
+    @GetMapping("/educacion/ver/formacionacademica")
+    public ResponseEntity<List<FormacionAcademica>> getEducation(){
+        List<FormacionAcademica> formacionesAcademicas = educacionService.verFormacionAcademica();
+        return new ResponseEntity(formacionesAcademicas,HttpStatus.OK);
+    }
+    
+    //Con ResponseEntity
+    @PostMapping("/educacion/create")
     public ResponseEntity<?> addEducation(@RequestBody FormacionAcademicaDto dtoeducation){
         if(StringUtils.isBlank(dtoeducation.getTitulo()))
             return new ResponseEntity(new Mensaje("El título es obligatorio"), HttpStatus.BAD_REQUEST);
@@ -73,38 +89,40 @@ public class FormacionAcademicaController {
         return new ResponseEntity(new Mensaje("Educación agregada"), HttpStatus.OK);        
     }
     
-    
-    
-    @DeleteMapping("/educacion/delete/{id}")
-    public String borrarEducacion(@PathVariable Long id){
-        if (educacionService.buscarFormacionAcademica(id)!=null){
-            educacionService.borrarFormacionAcademica(id);
-            return "Eduación eliminada exitosamente";
+    //Con ResponseEntity
+    @PutMapping("/educacion/update/{id}")
+    public ResponseEntity<?> updateEducation(@PathVariable("id") Long id, @RequestBody FormacionAcademicaDto dtoeducation){
+         if (!educacionService.existsById(id)){
+             return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
+         }
+         if(educacionService.existsByTitulo(dtoeducation.getTitulo()) && educacionService.buscarFormacionAcademicaPorTitulo(dtoeducation.getTitulo()).getId()!=id){
+             return new ResponseEntity(new Mensaje("Esta educación ya existe"), HttpStatus.BAD_REQUEST);
+         }
+         
+         if(StringUtils.isBlank(dtoeducation.getTitulo())){
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        return "No existe la Formación Academica con id "+id;
-    }
-    
-    @PutMapping("/educacion/edit")
-    public String editarEducacion(@RequestBody FormacionAcademica educacion){
-        educacionService.editarFormacionAcademica(educacion);
-        return "Educación editada exitosamente";
-    }
-    
-    
-    @PutMapping("/educacion/edit/{id}")
-    public String editarEducacion2(@PathVariable Long id, @RequestBody FormacionAcademica educacion){
-        if(!educacionService.existsById(id))
-            //return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
-            return "El id no existe";
-        if(educacionService.existsByTitulo(educacion.getTitulo()) && educacionService.buscarExperienciaLaboralPorTitulo(educacion.getTitulo()).getId() != id){
-            return "La educación ya existe";
-        }
-        
-        if (StringUtils.isBlank(educacion.getTitulo())){
-            return "El título de la Formación Académica es obligatorio";
-        }
+        FormacionAcademica educacion = educacionService.buscarFormacionAcademica(id);
+        educacion.setTitulo(dtoeducation.getTitulo());
+        educacion.setDescripcion(dtoeducation.getDescripcion());
+        educacion.setFechaInicio(dtoeducation.getFechaInicio());
+        educacion.setFechaFin(dtoeducation.getFechaFin());
+        educacion.setEstado(dtoeducation.getEstado());
+        educacion.setLink(dtoeducation.getLink());
+        educacion.setImage(dtoeducation.getImage());
         
         educacionService.editarFormacionAcademica(educacion);
-        return "Educación editada exitosamente";
+        return new ResponseEntity(new Mensaje("Educación actualizada"),HttpStatus.OK);        
+    }
+    
+    //Con ResponseEntity
+    @DeleteMapping("/educacion/remove/{id}")
+    public ResponseEntity<?> deleteEducation (@PathVariable("id") Long id){
+        if(!educacionService.existsById(id)){
+            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
+        }
+        
+        educacionService.borrarFormacionAcademica(id);
+        return new ResponseEntity(new Mensaje("Educación eliminada"), HttpStatus.OK);
     }
 }

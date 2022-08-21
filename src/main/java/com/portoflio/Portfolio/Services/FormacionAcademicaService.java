@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.portoflio.Portfolio.Services;
 
 import com.portoflio.Portfolio.Model.FormacionAcademica;
@@ -38,19 +34,17 @@ public class FormacionAcademicaService implements IFormacionAcademicaService {
     public void borrarFormacionAcademica(Long id) {
         educacionRepositorio.deleteById(id);
     }
-
-    @Override
+    
     public FormacionAcademica buscarFormacionAcademica(Long id) {
         return educacionRepositorio.findById(id).orElse(null);
-    }    
+    }   
     
-    /*public Optional<FormacionAcademica> getByTitulo(String titulo){
-        return educacionRepositorio.findByTitulo(titulo);
-    }*/
     
-    public FormacionAcademica buscarExperienciaLaboralPorTitulo(String nombre){
-        return educacionRepositorio.findByTitulo(nombre).orElse(null);
+    @Override
+    public FormacionAcademica buscarFormacionAcademicaPorTitulo(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
     
     public boolean existsById(Long id){
         return educacionRepositorio.existsById(id);
@@ -59,5 +53,10 @@ public class FormacionAcademicaService implements IFormacionAcademicaService {
     public boolean existsByTitulo(String titulo){
         return educacionRepositorio.existsByTitulo(titulo);
     }
+
+    // Otra opción en lugar de buscarFormacionAcademicaPorTitulo
+    /*public Optional<FormacionAcademica> getByTitulo(String titulo){
+        return educacionRepositorio.findByTitulo(titulo);
+    }*/
     
 }
