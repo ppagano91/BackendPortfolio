@@ -25,23 +25,24 @@ public class Proyecto {
     private String titulo;
     
     @NotNull
-    @Size(min=1, max=750,  message="Máximo 200 caracteres")
+    @Size(min=1, max=750,  message="Máximo 750 caracteres")
     private String descripcion;
     private String url;
     
     //@DefaultValue()
-    private Date fecha;
+    private String fecha;
     private String foto;
 
     public Proyecto() {
     }
 
-    public Proyecto(String titulo, String descripcion, String url, Date fecha, String foto) {
+    public Proyecto(String titulo, String descripcion, String fecha, String foto, String url) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.url = url;
         this.fecha = fecha;
         this.foto = foto;
+        this.url = url;        
+        
     }
     
     

@@ -10,5 +10,8 @@ public interface ITecnologiaService {
     public void editarTecnologia (Tecnologia tecnologia);
     public void borrarTecnologia (Long id);    
     public Tecnologia buscarTecnologia (Long id);
+    public Tecnologia buscarTecnologiaPorNombre (String nombre);
+    public boolean existsById(Long id);
+    public boolean existsByNombre(String nombre);
     
 }

@@ -41,8 +41,8 @@ public class FormacionAcademicaService implements IFormacionAcademicaService {
     
     
     @Override
-    public FormacionAcademica buscarFormacionAcademicaPorTitulo(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public FormacionAcademica buscarFormacionAcademicaPorTitulo(String titulo) {
+        return educacionRepositorio.findByTitulo(titulo).orElse(null);
     }
     
     

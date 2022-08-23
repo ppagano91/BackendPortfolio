@@ -12,12 +12,14 @@ public class FormacionAcademicaDto {
     @NotBlank
     private String descripcion;
     
+    private String institucion;
+    
     @NotBlank
     private String fechaInicio;
     
     private String fechaFin;
     
-    @NotBlank
+    //@NotBlank
     private String estado;
     
     private String link;

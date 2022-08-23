@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.portoflio.Portfolio.Services;
 
 import com.portoflio.Portfolio.Model.Proyecto;
@@ -40,5 +36,18 @@ public class ProyectoService implements IProyectoService {
     public Proyecto buscarProyecto(Long id) {
         return proyectoRepositorio.findById(id).orElse(null);
     }
+    
+    public Proyecto buscarProyectoPorTitulo(String titulo){
+        return proyectoRepositorio.findByTitulo(titulo).orElse(null);
+    }
+        
+    public boolean existsById(Long id){
+        return proyectoRepositorio.existsById(id);
+    }    
+    
+    public boolean existsByTitulo(String titulo){
+        return proyectoRepositorio.existsByTitulo(titulo);
+    }    
+
     
 }

@@ -15,25 +15,25 @@ public class Tecnologia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String Nombre;
-    private String Descripcion;
-    private String Url;
-    private String Foto;
-    private int Nivel;
-    private String Tipo;
+    private String nombre;
+    private String descripcion;
+    private String url;
+    private String foto;
+    private int nivel;
+    private String tipo;
     
     
 
     public Tecnologia() {
     }    
     
-    public Tecnologia(String Nombre, String Descripcion, String Url, String Foto, Integer Nivel, String Tipo) {
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
-        this.Url = Url;
-        this.Foto = Foto;
-        this.Nivel=Nivel;
-        this.Tipo=Tipo;
+    public Tecnologia(String Nombre, String Descripcion, String Url, String Foto, int Nivel, String Tipo) {
+        this.nombre = Nombre;
+        this.descripcion = Descripcion;
+        this.url = Url;
+        this.foto = Foto;
+        this.nivel = Nivel;
+        this.tipo = Tipo;
     }
     
     

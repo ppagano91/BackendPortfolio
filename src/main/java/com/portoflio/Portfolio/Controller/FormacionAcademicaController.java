@@ -65,10 +65,21 @@ public class FormacionAcademicaController {
     
     
     //Con ResponseEntity
-    @GetMapping("/educacion/ver/formacionacademica")
+    @GetMapping("/educacion/get/formacionacademica")
     public ResponseEntity<List<FormacionAcademica>> getEducation(){
         List<FormacionAcademica> formacionesAcademicas = educacionService.verFormacionAcademica();
         return new ResponseEntity(formacionesAcademicas,HttpStatus.OK);
+    }
+    
+    //Con ResponseEntity
+    @GetMapping("/educacion/get/{id}")
+    public ResponseEntity<FormacionAcademica> getEducationById(@PathVariable Long id){
+        if(!educacionService.existsById(id)){
+            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
+        }
+        FormacionAcademica educacion=educacionService.buscarFormacionAcademica(id);
+        return new ResponseEntity(educacion,HttpStatus.OK);
+                
     }
     
     //Con ResponseEntity
@@ -84,7 +95,7 @@ public class FormacionAcademicaController {
             dtoeducation.setFechaFin(null);
         }
         
-        FormacionAcademica educacion = new FormacionAcademica(dtoeducation.getTitulo(),dtoeducation.getDescripcion(),dtoeducation.getFechaInicio(),dtoeducation.getFechaFin(),dtoeducation.getEstado(),dtoeducation.getLink(),dtoeducation.getImage());
+        FormacionAcademica educacion = new FormacionAcademica(dtoeducation.getTitulo(),dtoeducation.getDescripcion(),dtoeducation.getInstitucion(),dtoeducation.getFechaInicio(),dtoeducation.getFechaFin(),dtoeducation.getEstado(),dtoeducation.getLink(),dtoeducation.getImage());
         educacionService.crearFormacionAcademica(educacion);
         return new ResponseEntity(new Mensaje("Educación agregada"), HttpStatus.OK);        
     }
@@ -105,6 +116,7 @@ public class FormacionAcademicaController {
         FormacionAcademica educacion = educacionService.buscarFormacionAcademica(id);
         educacion.setTitulo(dtoeducation.getTitulo());
         educacion.setDescripcion(dtoeducation.getDescripcion());
+        educacion.setInstitucion(dtoeducation.getInstitucion());
         educacion.setFechaInicio(dtoeducation.getFechaInicio());
         educacion.setFechaFin(dtoeducation.getFechaFin());
         educacion.setEstado(dtoeducation.getEstado());

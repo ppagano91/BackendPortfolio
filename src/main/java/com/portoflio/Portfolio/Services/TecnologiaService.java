@@ -37,4 +37,16 @@ public class TecnologiaService implements ITecnologiaService{
         return tecnologiaRepositorio.findById(id).orElse(null);
     }
     
+    public Tecnologia buscarTecnologiaPorNombre(String nombre) {
+        return tecnologiaRepositorio.findByNombre(nombre).orElse(null);
+    }
+    
+    public boolean existsById(Long id){
+        return tecnologiaRepositorio.existsById(id);
+    }    
+    
+    public boolean existsByNombre(String nombre){
+        return tecnologiaRepositorio.existsByNombre(nombre);
+    } 
+    
 }

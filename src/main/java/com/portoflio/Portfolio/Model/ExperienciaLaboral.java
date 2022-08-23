@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,8 @@ public class ExperienciaLaboral {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;      //Nombre: Posición del Trabajo
+    
+    @Size(min=1, max=750,  message="Máximo 750 caracteres")
     private String descripcion;
     private String fechaInicio;
     private String fechaFin;
