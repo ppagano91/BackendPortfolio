@@ -1,25 +1,18 @@
-package com.portoflio.Portfolio.Model;
+package com.portoflio.Portfolio.Dto;
 
-import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-@Entity
-public class Persona {
+public class PersonaDto {    
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
+    @NotBlank
     private String nombre;
     private String apellido;
     private String residencia;
+    
+    @NotBlank
     private String email;
     private String fechaNacimiento;
     private String telefono;
@@ -27,19 +20,21 @@ public class Persona {
     //Redes
     private String linkedin;
     private String github;
-    private String instagram;
+    private String instagram;    
     
-    @Size(max = 750)
+    
+    @NotBlank
     private String sobreMi;
+    
+    @NotBlank
     private String foto;
     
     private String urlCV;
 
-    public Persona() {
+    public PersonaDto() {
     }     
 
-    public Persona(Long id, String Nombre, String Apellido, String Residencia, String Email, String FechaNacimiento, String Telefono, String SobreMi, String Foto, String urlCV) {
-        this.id = id;
+    public PersonaDto(String Nombre, String Apellido, String Residencia, String Email, String FechaNacimiento, String Telefono, String SobreMi, String Foto, String urlCV) {        
         this.nombre = Nombre;
         this.apellido = Apellido;
         this.residencia = Residencia;
@@ -50,9 +45,5 @@ public class Persona {
         this.foto = Foto;
         this.urlCV=urlCV;
     }
-
-    
-    
-    
     
 }

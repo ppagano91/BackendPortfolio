@@ -37,4 +37,16 @@ public class PersonaService implements IPersonaService{
         return personaRepositorio.findById(id).orElse(null);
     }
         
+    public Persona buscarPersonaPorNombre(String nombre) {
+        return personaRepositorio.findByNombre(nombre).orElse(null);
+    }
+    
+    public boolean existsByNombre(String nombre){
+        return personaRepositorio.existsByNombre(nombre);
+    }
+    
+    public boolean existsById(Long id){
+        return personaRepositorio.existsById(id);
+    }   
+        
 }

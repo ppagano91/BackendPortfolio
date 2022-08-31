@@ -10,4 +10,7 @@ public interface IPersonaService {
     public void editarPersona (Persona persona);
     public void borrarPersona (Long id);    
     public Persona buscarPersona (Long id);
+    public Persona buscarPersonaPorNombre(String nombre);
+    public boolean existsByNombre(String nombre);
+    public boolean existsById(Long id);
 }
